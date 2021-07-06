@@ -1,0 +1,38 @@
+---
+
+- hosts: R2
+  gather_facts: no
+  connection: network_cli
+  roles:
+    - ansible-pyats
+  
+  tasks:
+    - name: collect config (before)
+      ios_command:
+        commands:
+          - show run
+      register: result_before
+
+    - name: load new acl into device
+      ios_config:
+        lines:
+          - access-list 1 permit 1.1.1.1 /24
+          - access-list 1 permit 2.2.2.2 /24
+        save_when: modified
+
+    - name: collect config (after)
+      ios_command:
+        commands:
+          - show run
+      register: result_after
+
+    - name: debug
+      debug:
+        msg: "{{ result_before.stdout[0] | genie_config_diff(result_after.stdout[0], mode='add', exclude=exclude_list) }}"
+
+  vars:
+    exclude_list:
+      - (^Using.*)
+      - (Building.*)
+      - (Current.*)
+      - (crypto pki certificate chain.*)
