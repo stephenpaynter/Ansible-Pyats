@@ -1,6 +1,6 @@
 
 ```yaml
-ansible-playbook pyats-pre-post.yml 
+[root@localhost 1-Ansible Code]# ansible-playbook pyats-pre-post.yml 
 
 PLAY [R2] *****************************************************************************************************************************************************************************
 
