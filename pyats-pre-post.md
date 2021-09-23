@@ -1,4 +1,6 @@
+## pyats-pre-post.yml
 
+ This playbook collects a Cisco IOS device's configuration , adds a basic access list and collects the configuration post change. By importing the ansible-pyats role we can then use genie diff to output the lines of code which have been added. 
 ```yaml
 [root@localhost 1-Ansible Code]# ansible-playbook pyats-pre-post.yml 
 
